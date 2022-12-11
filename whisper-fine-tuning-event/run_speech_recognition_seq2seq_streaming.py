@@ -508,7 +508,7 @@ def main():
         )
 
     # 8. Load Metric
-    metric = evaluate.load("wer")
+    metric = evaluate.load("cer")
     do_normalize_eval = data_args.do_normalize_eval
 
     def compute_metrics(pred):
@@ -527,9 +527,9 @@ def main():
             pred_str = [pred_str[i] for i in range(len(pred_str)) if len(label_str[i]) > 0]
             label_str = [label_str[i] for i in range(len(label_str)) if len(label_str[i]) > 0]
 
-        wer = 100 * metric.compute(predictions=pred_str, references=label_str)
+        cer = 100 * metric.compute(predictions=pred_str, references=label_str)
 
-        return {"wer": wer}
+        return {"cer": cer}
 
     # 9. Create a single speech processor
     if is_main_process(training_args.local_rank):
